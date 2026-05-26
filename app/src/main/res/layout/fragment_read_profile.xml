@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    tools:context=".ReadProfileFragment">
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name_fragment"
+        android:textSize="18sp"
+        android:minHeight="48dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/textViewGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gender_fragment"
+        android:textSize="18sp"
+        android:minHeight="48dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/textViewBAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/age_fragment"
+        android:textSize="18sp"
+        android:minHeight="48dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/textViewBWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/weight_fragment"
+        android:textSize="18sp"
+        android:minHeight="48dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/textViewBHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/height_fragment"
+        android:textSize="18sp"
+        android:minHeight="48dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/textViewBActive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/active_fragment"
+        android:textSize="18sp"
+        android:minHeight="48dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/textViewBProportion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/proportions_fragment"
+        android:textSize="18sp"
+        android:minHeight="48dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:layout_marginBottom="16dp"/>
+
+</LinearLayout>

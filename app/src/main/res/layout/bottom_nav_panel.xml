@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomNavLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="5"
+    android:background="@color/white"
+    android:elevation="8dp"
+    android:paddingVertical="4dp">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonProfile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="profileActivity"
+        android:padding="0dp"
+        android:text="@string/panelProfile"
+        android:textSize="12sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:backgroundTint="@color/elements"
+        app:cornerRadius="0dp"
+        app:strokeWidth="1dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonAdd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="addMealActivity"
+        android:padding="0dp"
+        android:text="@string/panelAdd"
+        android:textSize="12sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:backgroundTint="@color/elements"
+        app:cornerRadius="0dp"
+        app:strokeWidth="1dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonShow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="showMealsActivity"
+        android:padding="0dp"
+        android:text="@string/panelShow"
+        android:textSize="12sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:backgroundTint="@color/elements"
+        app:cornerRadius="0dp"
+        app:strokeWidth="1dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonAnalysis"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="analizeMeansActivity"
+        android:padding="0dp"
+        android:text="@string/panelAnalysis"
+        android:textSize="12sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:backgroundTint="@color/elements"
+        app:cornerRadius="0dp"
+        app:strokeWidth="1dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonProducts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="editProductsActivity"
+        android:padding="0dp"
+        android:text="@string/panelProducts"
+        android:textSize="12sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:backgroundTint="@color/elements"
+        app:cornerRadius="0dp"
+        app:strokeWidth="1dp" />
+
+</LinearLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/dialogProductName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Название продукта"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+    <EditText
+        android:id="@+id/dialogProductCal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Калории на 100 г"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/dialogProductProt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Белки на 100 г"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/dialogProductFat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Жиры на 100 г"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/dialogProductCarb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Углеводы на 100 г"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        android:maxLines="1" />
+
+</LinearLayout>
