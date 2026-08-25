@@ -253,15 +253,38 @@
             android:ellipsize="end"
             android:text="@string/apply_filter_button" />
     </LinearLayout>
-
+   
     <ListView
         android:id="@+id/listViewMeals"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp" />
-
+         />
+    <LinearLayout
+        android:id="@+id/layoutBackForward"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/elements"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/back" />
+        <Button
+            android:id="@+id/buttonForward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/elements"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@string/forward" />
+    </LinearLayout>
+    
     <!-- Нижняя панель навигации -->
     <include
         android:id="@+id/bottomNavLayout"

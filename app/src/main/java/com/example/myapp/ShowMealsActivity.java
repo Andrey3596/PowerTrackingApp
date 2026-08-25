@@ -38,14 +38,14 @@ public class ShowMealsActivity extends BaseActivity {
     private ListView listView;
 
     private RadioGroup radioGroupFilter;
-    private LinearLayout layoutFilterParams;
+    private LinearLayout layoutFilterParams,layoutBackForward;
     private LinearLayout layoutDay, layoutMonth, layoutYear, layoutInterval;
     private EditText editDay, editMonth, editYear;
     private EditText editMonthOnly, editYearForMonth;
     private EditText editYearOnly;
     private EditText editStartDay, editStartMonth, editStartYear;
     private EditText editEndDay, editEndMonth, editEndYear;
-    private Button buttonApplyFilter;
+    private Button buttonApplyFilter, buttonBack, buttonForward;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -116,6 +116,9 @@ public class ShowMealsActivity extends BaseActivity {
         editEndMonth = findViewById(R.id.editEndMonth);
         editEndYear = findViewById(R.id.editEndYear);
         buttonApplyFilter = findViewById(R.id.buttonApplyFilter);
+        buttonBack  = findViewById(R.id.buttonBack);
+        buttonForward = findViewById(R.id.buttonForward);
+        layoutBackForward  = findViewById(R.id.layoutBackForward);
     }
 
     private void setupListView() {
@@ -157,6 +160,7 @@ public class ShowMealsActivity extends BaseActivity {
 
     private void setupRadioGroup() {
         radioGroupFilter.setOnCheckedChangeListener((group, checkedId) -> {
+            layoutBackForward.setVisibility(View.GONE);
             if (checkedId == R.id.radioAll) {
                 layoutFilterParams.setVisibility(View.GONE);
                 showAllMeals();
