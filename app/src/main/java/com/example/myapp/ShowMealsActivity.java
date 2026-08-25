@@ -70,9 +70,8 @@ public class ShowMealsActivity extends BaseActivity {
         dbHelper = new DatabaseHelper(this);
         allMeals = dbHelper.loadAllMeals();
         // тут уже все выводятся вне зависимости от параметров
-        // filteredMeals = new ArrayList<>(MealFilter.filterByDay(allMeals, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear()));
-        //filteredMeals = new ArrayList<>();
-        filteredMeals = new ArrayList<>(allMeals);
+        filteredMeals = new ArrayList<>();
+        //filteredMeals = new ArrayList<>(allMeals);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

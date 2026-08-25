@@ -85,7 +85,8 @@ public class AnalizeMeansActivity extends BaseActivity {
         allGoals = dbHelper.loadAllGoals();
         allMeals = dbHelper.loadAllMeals();
         // тут уже все выводятся вне зависимости от параметров
-        filteredMeals = new ArrayList<>(allMeals);
+        filteredMeals = new ArrayList<>();
+        //filteredMeals = new ArrayList<>(allMeals);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -100,8 +101,8 @@ public class AnalizeMeansActivity extends BaseActivity {
         allMeals = dbHelper.loadAllMeals();
         allGoals = dbHelper.loadAllGoals();
         filteredMeals.clear();
-        // filteredMeals.addAll(MealFilter.filterByDay(allMeals, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear()));
-        filteredMeals.addAll(allMeals);
+        filteredMeals.addAll(MealFilter.filterByDay(allMeals, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear()));
+        //filteredMeals.addAll(allMeals);
         updateDisplay();
     }
 
