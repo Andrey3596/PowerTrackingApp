@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowMealsActivity extends BaseActivity {
-
+    private int dayOffset = 0;
     private DatabaseHelper dbHelper;
     private List<Meal> allMeals;
     private List<Meal> filteredMeals;
@@ -62,6 +62,8 @@ public class ShowMealsActivity extends BaseActivity {
         setupRadioGroup();
 
         buttonApplyFilter.setOnClickListener(v -> applyFilter());
+        buttonBack.setOnClickListener(v -> back());
+        buttonForward.setOnClickListener(v -> forward());
         loadData();
     }
 
@@ -118,6 +120,7 @@ public class ShowMealsActivity extends BaseActivity {
         buttonApplyFilter = findViewById(R.id.buttonApplyFilter);
         buttonBack  = findViewById(R.id.buttonBack);
         buttonForward = findViewById(R.id.buttonForward);
+        buttonForward.setVisibility(View.GONE);
         layoutBackForward  = findViewById(R.id.layoutBackForward);
     }
 
@@ -307,5 +310,39 @@ public class ShowMealsActivity extends BaseActivity {
             Toast.makeText(this, "Неверный формат даты", Toast.LENGTH_SHORT).show();
             return null;
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void back(){
+        dayOffset--;
+
+        updateMealsForCurrentOffset();
+        buttonForward.setVisibility(View.VISIBLE);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void forward(){
+        if (dayOffset < 0) {
+            dayOffset++;
+            updateMealsForCurrentOffset();
+            if (dayOffset == 0) {
+                buttonForward.setVisibility(View.GONE);
+                Toast.makeText(this, "Вы на сегодняшнем дне", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void updateMealsForCurrentOffset() {
+        LocalDate targetDate = LocalDate.now().plusDays(dayOffset);
+        List<Meal> filtered = MealFilter.filterByDay(allMeals, targetDate.getDayOfMonth(), targetDate.getMonthValue(), targetDate.getYear() );
+
+        filteredMeals.clear();
+        filteredMeals.addAll(filtered);
+        adapter.notifyDataSetChanged();
+
+        // Показываем сообщение, если данных нет
+        if (filteredMeals.isEmpty()) {
+            Toast.makeText(this, "Нет приёмов пищи на " + targetDate.getDayOfMonth()+"."+ targetDate.getMonthValue()+"."+ targetDate.getYear(), Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(this, "Приёмов пищи на " + targetDate.getDayOfMonth()+"."+ targetDate.getMonthValue()+"."+ targetDate.getYear(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnalizeMeansActivity extends BaseActivity {
-
+    private int dayOffset = 0;
     private DatabaseHelper dbHelper;
     private User user;
     private CalorieCalculator calculator;
@@ -45,14 +45,14 @@ public class AnalizeMeansActivity extends BaseActivity {
     private TextView textViewSummary;
 
     private RadioGroup radioGroupFilter;
-    private LinearLayout layoutFilterParams;
+    private LinearLayout layoutFilterParams,layoutBackForward;
     private LinearLayout layoutDay, layoutMonth, layoutYear, layoutInterval;
     private EditText editDay, editMonth, editYear;
     private EditText editMonthOnly, editYearForMonth;
     private EditText editYearOnly;
     private EditText editStartDay, editStartMonth, editStartYear;
     private EditText editEndDay, editEndMonth, editEndYear;
-    private Button buttonApplyFilter;
+    private Button buttonApplyFilter, buttonBack, buttonForward;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -69,6 +69,8 @@ public class AnalizeMeansActivity extends BaseActivity {
         setupRadioGroup();
 
         buttonApplyFilter.setOnClickListener(v -> applyFilter());
+        buttonBack.setOnClickListener(v -> back());
+        buttonForward.setOnClickListener(v -> forward());
         loadData();
     }
 
@@ -128,6 +130,10 @@ public class AnalizeMeansActivity extends BaseActivity {
         editEndMonth = findViewById(R.id.editEndMonth);
         editEndYear = findViewById(R.id.editEndYear);
         buttonApplyFilter = findViewById(R.id.buttonApplyFilter);
+        buttonBack  = findViewById(R.id.buttonBack);
+        buttonForward = findViewById(R.id.buttonForward);
+        buttonForward.setVisibility(View.GONE);
+        layoutBackForward  = findViewById(R.id.layoutBackForward);
     }
 
     private void setupListView() {
@@ -158,6 +164,7 @@ public class AnalizeMeansActivity extends BaseActivity {
 
     private void setupRadioGroup() {
         radioGroupFilter.setOnCheckedChangeListener((group, checkedId) -> {
+            layoutBackForward.setVisibility(View.GONE);
             if (checkedId == R.id.radioAll) {
                 layoutFilterParams.setVisibility(View.GONE);
                 showAllMeals();
@@ -360,5 +367,39 @@ public class AnalizeMeansActivity extends BaseActivity {
 
         textViewSummary.setText(summary.toString());
         textViewSummary.setVisibility(View.VISIBLE);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void back(){
+        dayOffset--;
+
+        updateMealsForCurrentOffset();
+        buttonForward.setVisibility(View.VISIBLE);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void forward(){
+        if (dayOffset < 0) {
+            dayOffset++;
+            updateMealsForCurrentOffset();
+            if (dayOffset == 0) {
+                buttonForward.setVisibility(View.GONE);
+                Toast.makeText(this, "Вы на сегодняшнем дне", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void updateMealsForCurrentOffset() {
+        LocalDate targetDate = LocalDate.now().plusDays(dayOffset);
+        List<Meal> filtered = MealFilter.filterByDay(allMeals, targetDate.getDayOfMonth(), targetDate.getMonthValue(), targetDate.getYear() );
+
+        filteredMeals.clear();
+        filteredMeals.addAll(filtered);
+        adapter.notifyDataSetChanged();
+        updateDisplay();
+        // Показываем сообщение, если данных нет
+        if (filteredMeals.isEmpty()) {
+            Toast.makeText(this, "Нет приёмов пищи на " + targetDate.getDayOfMonth()+"."+ targetDate.getMonthValue()+"."+ targetDate.getYear(), Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(this, "Приёмов пищи на " + targetDate.getDayOfMonth()+"."+ targetDate.getMonthValue()+"."+ targetDate.getYear(), Toast.LENGTH_SHORT).show();
     }
 }
