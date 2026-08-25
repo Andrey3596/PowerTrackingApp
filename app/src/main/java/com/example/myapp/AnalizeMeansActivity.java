@@ -63,7 +63,9 @@ public class AnalizeMeansActivity extends BaseActivity {
 
         initData();
         initViews();
+
         setupListView();
+
         setupRadioGroup();
 
         buttonApplyFilter.setOnClickListener(v -> applyFilter());
@@ -82,6 +84,7 @@ public class AnalizeMeansActivity extends BaseActivity {
         calculator = new CalorieCalculator(user);
         allGoals = dbHelper.loadAllGoals();
         allMeals = dbHelper.loadAllMeals();
+        // тут уже все выводятся вне зависимости от параметров
         filteredMeals = new ArrayList<>(allMeals);
     }
 
@@ -97,6 +100,7 @@ public class AnalizeMeansActivity extends BaseActivity {
         allMeals = dbHelper.loadAllMeals();
         allGoals = dbHelper.loadAllGoals();
         filteredMeals.clear();
+        // filteredMeals.addAll(MealFilter.filterByDay(allMeals, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear()));
         filteredMeals.addAll(allMeals);
         updateDisplay();
     }

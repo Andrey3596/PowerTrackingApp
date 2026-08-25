@@ -56,7 +56,9 @@ public class ShowMealsActivity extends BaseActivity {
 
         initData();
         initViews();
+
         setupListView();
+
         setupRadioGroup();
 
         buttonApplyFilter.setOnClickListener(v -> applyFilter());
@@ -67,6 +69,9 @@ public class ShowMealsActivity extends BaseActivity {
     private void initData() {
         dbHelper = new DatabaseHelper(this);
         allMeals = dbHelper.loadAllMeals();
+        // тут уже все выводятся вне зависимости от параметров
+        // filteredMeals = new ArrayList<>(MealFilter.filterByDay(allMeals, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear()));
+        //filteredMeals = new ArrayList<>();
         filteredMeals = new ArrayList<>(allMeals);
     }
 
@@ -78,10 +83,11 @@ public class ShowMealsActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void loadData() {
+    private void loadData() { // тут нужно сделать чтоб был сегоднишний день
         allMeals = dbHelper.loadAllMeals();
         filteredMeals.clear();
-        filteredMeals.addAll(allMeals);
+        filteredMeals.addAll(MealFilter.filterByDay(allMeals, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear()));
+        // filteredMeals.addAll(allMeals);
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }

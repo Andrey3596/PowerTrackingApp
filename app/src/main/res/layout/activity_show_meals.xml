@@ -20,6 +20,7 @@
         android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
+        <!-- android:checked="true" -->
         <RadioButton
             android:id="@+id/radioAll"
             android:layout_width="0dp"
@@ -27,7 +28,7 @@
             android:layout_weight="1"
             android:maxLines="1"
             android:ellipsize="end"
-            android:checked="true"
+            android:checked="false"
             android:text="@string/filter_all" />
 
         <RadioButton
