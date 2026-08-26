@@ -84,11 +84,11 @@ public class ShowMealsActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void loadData() { // тут нужно сделать чтоб был сегоднишний день
+    private void loadData() {
         allMeals = dbHelper.loadAllMeals();
         filteredMeals.clear();
         filteredMeals.addAll(MealFilter.filterByDay(allMeals, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear()));
-        // filteredMeals.addAll(allMeals);
+
         if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
