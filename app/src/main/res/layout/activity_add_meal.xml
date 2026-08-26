@@ -164,6 +164,38 @@
                 android:layout_height="200dp"
                 android:layout_marginTop="8dp" />
 
+
+            <LinearLayout
+                android:id="@+id/layoutDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/editDateDayMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/day"
+                    android:inputType="numberDecimal"
+                    android:minHeight="48dp" />
+                <EditText
+                    android:id="@+id/editDateMonthMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/month"
+                    android:inputType="numberDecimal"
+                    android:minHeight="48dp" />
+                <EditText
+                    android:id="@+id/editDateYearMeal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/year"
+                    android:inputType="numberDecimal"
+                    android:minHeight="48dp" />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/buttonSaveMeal"
                 android:layout_width="match_parent"
@@ -174,9 +206,10 @@
                 android:text="@string/save_meal_button"
                 android:maxLines="1"
                 android:ellipsize="end" />
-
         </LinearLayout>
+
     </ScrollView>
+
 
     <!-- Нижняя панель навигации (убраны лишние app:constraint атрибуты) -->
     <include

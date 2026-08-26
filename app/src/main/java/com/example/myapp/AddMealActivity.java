@@ -23,6 +23,7 @@ import com.example.myapp.model.Product;
 import com.example.myapp.service.ProductValidator;
 import com.example.myapp.service.StringFormatter;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +35,9 @@ public class AddMealActivity extends BaseActivity {
     // UI элементы
     private Spinner spinnerMealType;
     private RadioGroup radioGroupChoice;
-    private LinearLayout layoutExistingProduct, layoutNewProduct;
+    private LinearLayout layoutExistingProduct, layoutNewProduct,layoutDate;
     private Spinner spinnerProduct;
-    private EditText editWeightExisting, editWeightNew, editName, editCalories, editProtein, editFat, editCarb;
+    private EditText editWeightExisting, editWeightNew, editName, editCalories, editProtein, editFat, editCarb,editDateDayMeal,editDateMonthMeal,editDateYearMeal;
     private Button buttonAddProduct, buttonSaveMeal;
     private ListView listViewAddedProducts;
 
@@ -57,8 +58,12 @@ public class AddMealActivity extends BaseActivity {
         initViews();
         setupSpinnerMealType();
         setupRadioButtons();
+
         loadProductSpinner();
+
         setupAddedProductsList();
+
+        setupDateMeal();
 
         buttonAddProduct.setOnClickListener(v -> addProductToMeal());
         buttonSaveMeal.setOnClickListener(v -> saveMeal());
@@ -80,6 +85,11 @@ public class AddMealActivity extends BaseActivity {
         buttonAddProduct = findViewById(R.id.buttonAddProduct);
         buttonSaveMeal = findViewById(R.id.buttonSaveMeal);
         listViewAddedProducts = findViewById(R.id.listViewAddedProducts);
+
+        layoutDate = findViewById(R.id.layoutDate);
+        editDateDayMeal= findViewById(R.id.editDateDayMeal);
+        editDateMonthMeal= findViewById(R.id.editDateMonthMeal);
+        editDateYearMeal= findViewById(R.id.editDateYearMeal);
     }
 
     private void setupSpinnerMealType() {
@@ -142,7 +152,15 @@ public class AddMealActivity extends BaseActivity {
             addNewProduct();
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setupDateMeal() {
+        LocalDate today = LocalDate.now();
 
+        editDateDayMeal.setText(String.valueOf(today.getDayOfMonth()));
+        editDateMonthMeal.setText(String.valueOf(today.getMonthValue()));
+        editDateYearMeal.setText(String.valueOf(today.getYear()));
+
+    }
     private void addExistingProduct() {
         int position = spinnerProduct.getSelectedItemPosition();
         if (position < 0 || position >= productSpinnerAdapter.getCount()) {
@@ -215,7 +233,29 @@ public class AddMealActivity extends BaseActivity {
             return;
         }
         String type = spinnerMealType.getSelectedItem().toString();
-        Meal meal = new Meal(consumedProducts, type, LocalDate.now());
+
+        int day,month,year;
+        try {
+            day = Integer.parseInt(editDateDayMeal.getText().toString());
+            month = Integer.parseInt(editDateMonthMeal.getText().toString());
+            year = Integer.parseInt(editDateYearMeal.getText().toString());
+        }
+        catch (NumberFormatException e) {
+            Toast.makeText(this, "Введите числа во все поля", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        LocalDate current;
+        try {
+            current = LocalDate.of(year, month, day);
+        }
+        catch (DateTimeException e) {
+            Toast.makeText(this, "Введите корректную дату", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Meal meal = new Meal(consumedProducts, type, current);
+
         dbHelper.saveMeal(meal);
         Toast.makeText(this, "Приём пищи сохранён", Toast.LENGTH_SHORT).show();
         finish();

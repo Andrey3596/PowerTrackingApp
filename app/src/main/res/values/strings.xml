@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Healthy eating 1.1</string>
+    <string name="app_name">Healthy eating 1.3</string>
     <string name="back">⟸</string>
     <string name="forward">⟹</string>
     <string name="button_text">Нажми пж</string>
@@ -54,6 +54,9 @@
     <string name="added_products_title">Добавленные продукты</string>
     <string name="save_meal_button">Сохранить приём</string>
     <string name="goals_button">Цели</string>
+    <string name="day">День</string>
+    <string name="month">Месяц</string>
+    <string name="year">Год</string>
     <!-- Экран показа приёмов пищи -->
     <string name="show_meals_filter_title">Сортировка по дате</string>
     <string name="filter_all">Все</string>

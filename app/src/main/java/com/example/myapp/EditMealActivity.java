@@ -20,6 +20,7 @@ import com.example.myapp.database.DatabaseHelper;
 import com.example.myapp.model.ConsumedProduct;
 import com.example.myapp.model.Meal;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -151,10 +152,28 @@ public class EditMealActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void saveChanges() {
         String newType = spinnerMealType.getSelectedItem().toString();
-        int day = Integer.parseInt(editDateDay.getText().toString());
-        int month = Integer.parseInt(editDateMonth.getText().toString());
-        int year = Integer.parseInt(editDateYear.getText().toString());
-        LocalDate newDate = LocalDate.of(year, month, day);
+
+
+        int day,month,year;
+        try {
+            day = Integer.parseInt(editDateDay.getText().toString());
+            month = Integer.parseInt(editDateMonth.getText().toString());
+            year = Integer.parseInt(editDateYear.getText().toString());
+        }
+        catch (NumberFormatException e) {
+            Toast.makeText(this, "Введите числа во все поля", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        LocalDate newDate;
+        try {
+            newDate = LocalDate.of(year, month, day);
+        }
+        catch (DateTimeException e) {
+            Toast.makeText(this, "Введите корректную дату", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         currentMeal.setTypeMeal(newType);
         currentMeal.setDate(newDate);
