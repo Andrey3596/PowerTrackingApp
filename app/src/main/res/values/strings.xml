@@ -57,6 +57,7 @@
     <string name="day">День</string>
     <string name="month">Месяц</string>
     <string name="year">Год</string>
+    <string name="write_text">Напишите продукт...</string>
     <!-- Экран показа приёмов пищи -->
     <string name="show_meals_filter_title">Сортировка по дате</string>
     <string name="filter_all">Все</string>

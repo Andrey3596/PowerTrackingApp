@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -30,20 +31,23 @@ import java.util.List;
 
 public class AddMealActivity extends BaseActivity {
 
+    private Product selectedProduct = null;
+    private AutoCompleteTextView autoCompleteTextView;
     private DatabaseHelper dbHelper;
 
     // UI элементы
     private Spinner spinnerMealType;
     private RadioGroup radioGroupChoice;
-    private LinearLayout layoutExistingProduct, layoutNewProduct,layoutDate;
-    private Spinner spinnerProduct;
+    private LinearLayout layoutExistingProduct, layoutNewProduct;
+
+//    private Spinner spinnerProduct;
     private EditText editWeightExisting, editWeightNew, editName, editCalories, editProtein, editFat, editCarb,editDateDayMeal,editDateMonthMeal,editDateYearMeal;
     private Button buttonAddProduct, buttonSaveMeal;
     private ListView listViewAddedProducts;
 
     // Данные
     private List<Product> productList;
-    private ArrayAdapter<Product> productSpinnerAdapter;
+    private ArrayAdapter<Product> productSpinnerAdapter,productAdapter;
     private List<ConsumedProduct> consumedProducts = new ArrayList<>();
     private ArrayAdapter<ConsumedProduct> addedProductsAdapter;
 
@@ -59,7 +63,8 @@ public class AddMealActivity extends BaseActivity {
         setupSpinnerMealType();
         setupRadioButtons();
 
-        loadProductSpinner();
+//        loadProductSpinner();
+        setupAutoComplete();
 
         setupAddedProductsList();
 
@@ -74,7 +79,7 @@ public class AddMealActivity extends BaseActivity {
         radioGroupChoice = findViewById(R.id.radioGroupChoice);
         layoutExistingProduct = findViewById(R.id.layoutExistingProduct);
         layoutNewProduct = findViewById(R.id.layoutNewProduct);
-        spinnerProduct = findViewById(R.id.spinnerProduct);
+//        spinnerProduct = findViewById(R.id.spinnerProduct);
         editWeightExisting = findViewById(R.id.editWeightExisting);
         editWeightNew = findViewById(R.id.editWeightNew);
         editName = findViewById(R.id.editName);
@@ -86,10 +91,13 @@ public class AddMealActivity extends BaseActivity {
         buttonSaveMeal = findViewById(R.id.buttonSaveMeal);
         listViewAddedProducts = findViewById(R.id.listViewAddedProducts);
 
-        layoutDate = findViewById(R.id.layoutDate);
+//        layoutDate = findViewById(R.id.layoutDate);
         editDateDayMeal= findViewById(R.id.editDateDayMeal);
         editDateMonthMeal= findViewById(R.id.editDateMonthMeal);
         editDateYearMeal= findViewById(R.id.editDateYearMeal);
+
+        autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
+
     }
 
     private void setupSpinnerMealType() {
@@ -111,11 +119,27 @@ public class AddMealActivity extends BaseActivity {
         });
     }
 
-    private void loadProductSpinner() {
+//    private void loadProductSpinner() {
+//        productList = dbHelper.loadAllProducts();
+//        productSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, productList);
+//        productSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerProduct.setAdapter(productSpinnerAdapter);
+//    }
+    private void setupAutoComplete() {
         productList = dbHelper.loadAllProducts();
-        productSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, productList);
-        productSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerProduct.setAdapter(productSpinnerAdapter);
+
+
+        ArrayAdapter<Product> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, productList);
+        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setThreshold(1);
+
+
+        autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
+            selectedProduct = (Product) parent.getItemAtPosition(position);
+
+            Toast.makeText(this, "Выбрано: " + selectedProduct.getNameProduct(), Toast.LENGTH_SHORT).show();
+        });
+
     }
 
     private void setupAddedProductsList() {
@@ -162,15 +186,21 @@ public class AddMealActivity extends BaseActivity {
 
     }
     private void addExistingProduct() {
-        int position = spinnerProduct.getSelectedItemPosition();
-        if (position < 0 || position >= productSpinnerAdapter.getCount()) {
-            Toast.makeText(this, "Выберите продукт", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        int position = spinnerProduct.getSelectedItemPosition();
+//        if (position < 0 || position >= productSpinnerAdapter.getCount()) {
+//            Toast.makeText(this, "Выберите продукт", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        Product selectedProduct = productSpinnerAdapter.getItem(position);
+//        if (selectedProduct == null) {
+//            Toast.makeText(this, "Продукт не найден", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
-        Product selectedProduct = productSpinnerAdapter.getItem(position);
+        // Проверяем, выбран ли продукт
         if (selectedProduct == null) {
-            Toast.makeText(this, "Продукт не найден", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Выберите продукт из подсказок", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -183,8 +213,16 @@ public class AddMealActivity extends BaseActivity {
         double weight = Double.parseDouble(weightStr);
         ConsumedProduct cp = new ConsumedProduct(selectedProduct, weight);
         consumedProducts.add(cp);
+
         addedProductsAdapter.notifyDataSetChanged();
         editWeightExisting.setText("");
+        autoCompleteTextView.setText("");
+        selectedProduct = null;
+
+
+
+
+
     }
 
     private void addNewProduct() {
@@ -208,7 +246,8 @@ public class AddMealActivity extends BaseActivity {
 
         Product newProduct = new Product(name, cal, prot, fat, carb);
         dbHelper.saveProduct(newProduct);
-        loadProductSpinner();
+//        loadProductSpinner();
+        setupAutoComplete();
 
         ConsumedProduct cp = new ConsumedProduct(newProduct, weight);
         consumedProducts.add(cp);
