@@ -42,7 +42,7 @@ public class AddMealActivity extends BaseActivity {
 
 //    private Spinner spinnerProduct;
     private EditText editWeightExisting, editWeightNew, editName, editCalories, editProtein, editFat, editCarb,editDateDayMeal,editDateMonthMeal,editDateYearMeal;
-    private Button buttonAddProduct, buttonSaveMeal;
+    private Button buttonAddProduct, buttonSaveMeal,buttonClearFound,buttonClearAll,buttonChangeAim;
     private ListView listViewAddedProducts;
 
     // Данные
@@ -72,6 +72,10 @@ public class AddMealActivity extends BaseActivity {
 
         buttonAddProduct.setOnClickListener(v -> addProductToMeal());
         buttonSaveMeal.setOnClickListener(v -> saveMeal());
+        buttonClearFound.setOnClickListener(v -> clearFound());
+        buttonClearAll.setOnClickListener(v -> clearAll());
+
+//        buttonChangeAim.setOnClickListener(v -> showChangeAim());
     }
 
     private void initViews() {
@@ -98,6 +102,10 @@ public class AddMealActivity extends BaseActivity {
 
         autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
 
+        buttonClearFound = findViewById(R.id.buttonClearFound);
+        buttonClearAll = findViewById(R.id.buttonClearAll);
+
+//        buttonChangeAim = findViewById(R.id.buttonChangeAim);
     }
 
     private void setupSpinnerMealType() {
@@ -299,4 +307,25 @@ public class AddMealActivity extends BaseActivity {
         Toast.makeText(this, "Приём пищи сохранён", Toast.LENGTH_SHORT).show();
         finish();
     }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void clearAll() {
+        editWeightExisting.setText("");
+        autoCompleteTextView.setText("");
+        selectedProduct = null;
+        consumedProducts.clear();
+        addedProductsAdapter.notifyDataSetChanged();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void clearFound() {
+        autoCompleteTextView.setText("");
+        selectedProduct = null;
+    }
+
+//    @RequiresApi(api = Build.VERSION_CODES.O)
+//    private void showChangeAim() {
+//
+//    }
 }

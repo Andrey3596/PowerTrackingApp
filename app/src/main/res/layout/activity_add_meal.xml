@@ -156,6 +156,15 @@
                 android:text="@string/add_product_button"
                 android:maxLines="1"
                 android:ellipsize="end" />
+            <Button
+                android:id="@+id/buttonClearFound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/elements"
+                android:text="@string/clear_found_button"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
             <!-- Список добавленных продуктов -->
             <TextView
@@ -204,12 +213,35 @@
                     android:minHeight="48dp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layoutBottomButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/buttonClearAll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/elements"
+                    android:text="@string/clear_all_button"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+<!--                <Button-->
+<!--                    android:id="@+id/buttonChangeAim"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:backgroundTint="@color/elements"-->
+<!--                    android:text="@string/change_aim"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:ellipsize="end"-->
+<!--                    android:paddingHorizontal="19dp"/>-->
+            </LinearLayout>
             <Button
                 android:id="@+id/buttonSaveMeal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/elements"
                 android:text="@string/save_meal_button"
                 android:maxLines="1"
@@ -217,7 +249,6 @@
         </LinearLayout>
 
     </ScrollView>
-
 
     <!-- Нижняя панель навигации (убраны лишние app:constraint атрибуты) -->
     <include

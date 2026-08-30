@@ -53,6 +53,9 @@
     <string name="add_product_button">Добавить продукт в приём</string>
     <string name="added_products_title">Добавленные продукты</string>
     <string name="save_meal_button">Сохранить приём</string>
+    <string name="clear_all_button">Очистить все</string>
+    <string name="change_aim">Посмотреть изменение целей</string>
+    <string name="clear_found_button">Очистить поиск</string>
     <string name="goals_button">Цели</string>
     <string name="day">День</string>
     <string name="month">Месяц</string>
