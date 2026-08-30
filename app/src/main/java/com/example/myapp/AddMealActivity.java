@@ -16,11 +16,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.myapp.database.DatabaseHelper;
 import com.example.myapp.model.ConsumedProduct;
+import com.example.myapp.model.Goal;
 import com.example.myapp.model.Meal;
 import com.example.myapp.model.Product;
+import com.example.myapp.model.User;
+import com.example.myapp.service.CalorieCalculator;
+import com.example.myapp.service.MealAnalyzer;
+import com.example.myapp.service.MealFilter;
 import com.example.myapp.service.ProductValidator;
 import com.example.myapp.service.StringFormatter;
 
@@ -75,7 +81,7 @@ public class AddMealActivity extends BaseActivity {
         buttonClearFound.setOnClickListener(v -> clearFound());
         buttonClearAll.setOnClickListener(v -> clearAll());
 
-//        buttonChangeAim.setOnClickListener(v -> showChangeAim());
+        buttonChangeAim.setOnClickListener(v -> showChangeAim());
     }
 
     private void initViews() {
@@ -83,7 +89,7 @@ public class AddMealActivity extends BaseActivity {
         radioGroupChoice = findViewById(R.id.radioGroupChoice);
         layoutExistingProduct = findViewById(R.id.layoutExistingProduct);
         layoutNewProduct = findViewById(R.id.layoutNewProduct);
-//        spinnerProduct = findViewById(R.id.spinnerProduct);
+//      spinnerProduct = findViewById(R.id.spinnerProduct);
         editWeightExisting = findViewById(R.id.editWeightExisting);
         editWeightNew = findViewById(R.id.editWeightNew);
         editName = findViewById(R.id.editName);
@@ -95,7 +101,7 @@ public class AddMealActivity extends BaseActivity {
         buttonSaveMeal = findViewById(R.id.buttonSaveMeal);
         listViewAddedProducts = findViewById(R.id.listViewAddedProducts);
 
-//        layoutDate = findViewById(R.id.layoutDate);
+//      layoutDate = findViewById(R.id.layoutDate);
         editDateDayMeal= findViewById(R.id.editDateDayMeal);
         editDateMonthMeal= findViewById(R.id.editDateMonthMeal);
         editDateYearMeal= findViewById(R.id.editDateYearMeal);
@@ -104,8 +110,7 @@ public class AddMealActivity extends BaseActivity {
 
         buttonClearFound = findViewById(R.id.buttonClearFound);
         buttonClearAll = findViewById(R.id.buttonClearAll);
-
-//        buttonChangeAim = findViewById(R.id.buttonChangeAim);
+        buttonChangeAim = findViewById(R.id.buttonChangeAim);
     }
 
     private void setupSpinnerMealType() {
@@ -324,8 +329,86 @@ public class AddMealActivity extends BaseActivity {
         selectedProduct = null;
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    private void showChangeAim() {
-//
-//    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void showChangeAim() {
+
+
+        String type = spinnerMealType.getSelectedItem().toString();
+        int day,month,year;
+        try {
+            day = Integer.parseInt(editDateDayMeal.getText().toString());
+            month = Integer.parseInt(editDateMonthMeal.getText().toString());
+            year = Integer.parseInt(editDateYearMeal.getText().toString());
+        }
+        catch (NumberFormatException e) {
+            Toast.makeText(this, "Введите числа во все поля", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        LocalDate current;
+        try {
+            current = LocalDate.of(year, month, day);
+        }
+        catch (DateTimeException e) {
+            Toast.makeText(this, "Введите корректную дату", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Meal mealTry = new Meal(consumedProducts, type, current);
+
+        List<Meal> allMeals = dbHelper.loadAllMeals();
+        allMeals.add(mealTry);
+
+        List<Meal> filteredMeals= new ArrayList<>();
+        filteredMeals.addAll(MealFilter.filterByDay(allMeals, day, month, year));
+
+        MealAnalyzer.AnalysisResult result = MealAnalyzer.calculateSummary(filteredMeals);
+
+        int days = result.getDaysCount();
+        double totalCal = result.getTotalCalories();
+        double totalProt = result.getTotalProtein();
+        double totalFat = result.getTotalFat();
+        double totalCarb = result.getTotalCarb();
+
+        StringBuilder summary = new StringBuilder();
+        summary.append(StringFormatter.formatSummary(days, totalCal, totalProt, totalFat, totalCarb));
+
+        User user = dbHelper.loadUser();
+        CalorieCalculator calculator = new CalorieCalculator(user);
+
+        double targetCal = calculator.getBMR() * days;
+        double targetProt = calculator.getAimProtein() * days;
+        double targetFat = calculator.getAimFat() * days;
+        double targetCarb = calculator.getAimCarb() * days;
+        summary.append(StringFormatter.formatUserGoalComparison(
+                "Рекомендуемая цель",
+                totalCal, targetCal,
+                totalProt, targetProt,
+                totalFat, targetFat,
+                totalCarb, targetCarb
+        ));
+
+
+        List<Goal> allGoals = dbHelper.loadAllGoals();
+
+        for (Goal g : allGoals) {
+            if (g.getName().equals("Рекомендуемая")) continue;
+            Double tCal = g.hasCalories() ? g.getCalories() * days : null;
+            Double tProt = g.hasProtein() ? g.getProtein() * days : null;
+            Double tFat = g.hasFat() ? g.getFat() * days : null;
+            Double tCarb = g.hasCarb() ? g.getCarb() * days : null;
+
+            summary.append(StringFormatter.formatUserGoalComparison(
+                    g.getName(), totalCal, tCal, totalProt, tProt, totalFat, tFat, totalCarb, tCarb
+            ));
+        }
+
+
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(summary)
+                .setCancelable(false)
+                .setPositiveButton("OK", (dialog, which) -> dialog.cancel());
+        builder.create().show();
+    }
 }

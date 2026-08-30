@@ -228,15 +228,15 @@
                     android:maxLines="1"
                     android:ellipsize="end" />
 
-<!--                <Button-->
-<!--                    android:id="@+id/buttonChangeAim"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:backgroundTint="@color/elements"-->
-<!--                    android:text="@string/change_aim"-->
-<!--                    android:maxLines="1"-->
-<!--                    android:ellipsize="end"-->
-<!--                    android:paddingHorizontal="19dp"/>-->
+                <Button
+                    android:id="@+id/buttonChangeAim"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/elements"
+                    android:text="@string/change_aim"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:paddingHorizontal="19dp"/>
             </LinearLayout>
             <Button
                 android:id="@+id/buttonSaveMeal"
