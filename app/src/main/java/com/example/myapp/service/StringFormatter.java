@@ -79,7 +79,7 @@ public class StringFormatter {
         StringBuilder sb = new StringBuilder();
         sb.append(name).append(":\n");
         if (targetCal != null) {
-            sb.append(String.format(Locale.US, "Было калории %.0f/%.0f (%.0f%%) + %.0f каллорий\n", actualCal, targetCal, actualCal / targetCal * 100,cal));
+            sb.append(String.format(Locale.US, "калории %.0f/%.0f (%.0f%%) + %.0f кал.\n", actualCal, targetCal, actualCal / targetCal * 100,cal));
         }
         if (targetProt != null) {
             sb.append(String.format(Locale.US, "белки %.0f/%.0f (%.0f%%) + %.0f белков\n", actualProt, targetProt, actualProt / targetProt * 100, prot));
@@ -88,7 +88,7 @@ public class StringFormatter {
             sb.append(String.format(Locale.US, "жиры %.0f/%.0f (%.0f%%) + %.0f жиров\n", actualFat, targetFat, actualFat / targetFat * 100,fat));
         }
         if (targetCarb != null) {
-            sb.append(String.format(Locale.US, "углеводы %.0f/%.0f (%.0f%%) + %.0f углеводов\n", actualCarb, targetCarb, actualCarb / targetCarb * 100,carb));
+            sb.append(String.format(Locale.US, "углеводы %.0f/%.0f (%.0f%%) + %.0f угл.\n", actualCarb, targetCarb, actualCarb / targetCarb * 100,carb));
         }
         return sb.toString();
     }
