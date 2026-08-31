@@ -332,8 +332,14 @@ public class AddMealActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void showChangeAim() {
 
+        double cal=0 ,prot=0, fat=0, carb=0;
+        for (ConsumedProduct cp : consumedProducts){
+            cal += cp.getCalories();
+            prot += cp.getProtein();
+            fat += cp.getFat();
+            carb += cp.getCarb();
+        }
 
-        String type = spinnerMealType.getSelectedItem().toString();
         int day,month,year;
         try {
             day = Integer.parseInt(editDateDayMeal.getText().toString());
@@ -344,24 +350,20 @@ public class AddMealActivity extends BaseActivity {
             Toast.makeText(this, "Введите числа во все поля", Toast.LENGTH_SHORT).show();
             return;
         }
-        LocalDate current;
         try {
-            current = LocalDate.of(year, month, day);
+            LocalDate current = LocalDate.of(year, month, day);
         }
         catch (DateTimeException e) {
             Toast.makeText(this, "Введите корректную дату", Toast.LENGTH_SHORT).show();
             return;
         }
-        Meal mealTry = new Meal(consumedProducts, type, current);
 
         List<Meal> allMeals = dbHelper.loadAllMeals();
-        allMeals.add(mealTry);
-
-        List<Meal> filteredMeals= new ArrayList<>();
+        List<Meal> filteredMeals = new ArrayList<>();
         filteredMeals.addAll(MealFilter.filterByDay(allMeals, day, month, year));
 
-        MealAnalyzer.AnalysisResult result = MealAnalyzer.calculateSummary(filteredMeals);
 
+        MealAnalyzer.AnalysisResult result = MealAnalyzer.calculateSummary(filteredMeals);
         int days = result.getDaysCount();
         double totalCal = result.getTotalCalories();
         double totalProt = result.getTotalProtein();
@@ -369,7 +371,7 @@ public class AddMealActivity extends BaseActivity {
         double totalCarb = result.getTotalCarb();
 
         StringBuilder summary = new StringBuilder();
-        summary.append(StringFormatter.formatSummary(days, totalCal, totalProt, totalFat, totalCarb));
+        summary.append(StringFormatter.formatSummaryChangeAim(days));
 
         User user = dbHelper.loadUser();
         CalorieCalculator calculator = new CalorieCalculator(user);
@@ -378,32 +380,15 @@ public class AddMealActivity extends BaseActivity {
         double targetProt = calculator.getAimProtein() * days;
         double targetFat = calculator.getAimFat() * days;
         double targetCarb = calculator.getAimCarb() * days;
-        summary.append(StringFormatter.formatUserGoalComparison(
+
+        summary.append(StringFormatter.formatUserGoalChangeAim(
                 "Рекомендуемая цель",
                 totalCal, targetCal,
                 totalProt, targetProt,
                 totalFat, targetFat,
-                totalCarb, targetCarb
+                totalCarb, targetCarb,
+                cal ,prot, fat, carb
         ));
-
-
-        List<Goal> allGoals = dbHelper.loadAllGoals();
-
-        for (Goal g : allGoals) {
-            if (g.getName().equals("Рекомендуемая")) continue;
-            Double tCal = g.hasCalories() ? g.getCalories() * days : null;
-            Double tProt = g.hasProtein() ? g.getProtein() * days : null;
-            Double tFat = g.hasFat() ? g.getFat() * days : null;
-            Double tCarb = g.hasCarb() ? g.getCarb() * days : null;
-
-            summary.append(StringFormatter.formatUserGoalComparison(
-                    g.getName(), totalCal, tCal, totalProt, tProt, totalFat, tFat, totalCarb, tCarb
-            ));
-        }
-
-
-
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(summary)

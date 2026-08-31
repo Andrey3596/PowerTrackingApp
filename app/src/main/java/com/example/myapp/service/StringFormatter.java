@@ -66,7 +66,32 @@ public class StringFormatter {
         return sb.toString();
     }
 
-
+    public static String formatSummaryChangeAim(int days) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Сводка за ").append(days).append(" дн.\n");
+        return sb.toString();
+    }
+    public static String formatUserGoalChangeAim(String name, double actualCal, Double targetCal,
+                                                 double actualProt, Double targetProt,
+                                                 double actualFat, Double targetFat,
+                                                 double actualCarb, Double targetCarb,
+                                                 double cal, double prot, double fat, double carb) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name).append(":\n");
+        if (targetCal != null) {
+            sb.append(String.format(Locale.US, "Было калории %.0f/%.0f (%.0f%%) - Стало калории %.0f/%.0f (%.0f%%) + %.0f каллорий\n", actualCal, targetCal, actualCal / targetCal * 100,actualCal+cal,targetCal,(actualCal+cal) / targetCal * 100,cal));
+        }
+        if (targetProt != null) {
+            sb.append(String.format(Locale.US, "белки %.0f/%.0f (%.0f%%) - Стало белки %.0f/%.0f (%.0f%%) + %.0f белков\n", actualProt, targetProt, actualProt / targetProt * 100, actualProt+prot, targetProt, (actualProt+prot) / targetProt * 100,prot));
+        }
+        if (targetFat != null) {
+            sb.append(String.format(Locale.US, "жиры %.0f/%.0f (%.0f%%) -  Стало жиры %.0f/%.0f (%.0f%%) + %.0f жиров\n", actualFat, targetFat, actualFat / targetFat * 100,actualFat+fat, targetFat, (actualFat+fat) / targetFat * 100,fat));
+        }
+        if (targetCarb != null) {
+            sb.append(String.format(Locale.US, "углеводы %.0f/%.0f (%.0f%%) - Стало углеводы %.0f/%.0f (%.0f%%) + %.0f углеводов\n", actualCarb, targetCarb, actualCarb / targetCarb * 100,actualCarb+carb, targetCarb, (actualCarb+carb) / targetCarb * 100,carb));
+        }
+        return sb.toString();
+    }
 
     public static String formatProductKbju(Product product) {
         return String.format(Locale.US, "%.1f ккал, %.1f б, %.1f ж, %.1f у на 100г",
