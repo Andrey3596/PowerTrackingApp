@@ -79,16 +79,16 @@ public class StringFormatter {
         StringBuilder sb = new StringBuilder();
         sb.append(name).append(":\n");
         if (targetCal != null) {
-            sb.append(String.format(Locale.US, "Было калории %.0f/%.0f (%.0f%%) - Стало калории %.0f/%.0f (%.0f%%) + %.0f каллорий\n", actualCal, targetCal, actualCal / targetCal * 100,actualCal+cal,targetCal,(actualCal+cal) / targetCal * 100,cal));
+            sb.append(String.format(Locale.US, "Было калории %.0f/%.0f (%.0f%%) + %.0f каллорий\n", actualCal, targetCal, actualCal / targetCal * 100,cal));
         }
         if (targetProt != null) {
-            sb.append(String.format(Locale.US, "белки %.0f/%.0f (%.0f%%) - Стало белки %.0f/%.0f (%.0f%%) + %.0f белков\n", actualProt, targetProt, actualProt / targetProt * 100, actualProt+prot, targetProt, (actualProt+prot) / targetProt * 100,prot));
+            sb.append(String.format(Locale.US, "белки %.0f/%.0f (%.0f%%) + %.0f белков\n", actualProt, targetProt, actualProt / targetProt * 100, prot));
         }
         if (targetFat != null) {
-            sb.append(String.format(Locale.US, "жиры %.0f/%.0f (%.0f%%) -  Стало жиры %.0f/%.0f (%.0f%%) + %.0f жиров\n", actualFat, targetFat, actualFat / targetFat * 100,actualFat+fat, targetFat, (actualFat+fat) / targetFat * 100,fat));
+            sb.append(String.format(Locale.US, "жиры %.0f/%.0f (%.0f%%) + %.0f жиров\n", actualFat, targetFat, actualFat / targetFat * 100,fat));
         }
         if (targetCarb != null) {
-            sb.append(String.format(Locale.US, "углеводы %.0f/%.0f (%.0f%%) - Стало углеводы %.0f/%.0f (%.0f%%) + %.0f углеводов\n", actualCarb, targetCarb, actualCarb / targetCarb * 100,actualCarb+carb, targetCarb, (actualCarb+carb) / targetCarb * 100,carb));
+            sb.append(String.format(Locale.US, "углеводы %.0f/%.0f (%.0f%%) + %.0f углеводов\n", actualCarb, targetCarb, actualCarb / targetCarb * 100,carb));
         }
         return sb.toString();
     }
