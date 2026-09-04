@@ -59,6 +59,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/radio_new" />
+
+                <RadioButton
+                    android:id="@+id/radioNewAPI"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/API_found_button" />
             </RadioGroup>
 
             <!-- Блок выбора существующего продукта -->
@@ -67,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+
                 android:orientation="vertical">
 
 <!--                <Spinner-->
@@ -92,6 +101,51 @@
                     android:minHeight="48dp" />
 
             </LinearLayout>
+
+            <!-- Блок выбора API продукта -->
+            <LinearLayout
+                android:id="@+id/layoutAPIProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layoutUpAPI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/APITextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/write_text"
+                        android:completionThreshold="1"/>
+                    <Button
+                        android:id="@+id/buttonAPI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/elements"
+                        android:text="@string/API_found_button"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/editWeightExistingAPI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/weight_hint"
+                    android:inputType="numberDecimal"
+                    android:minHeight="48dp" />
+
+            </LinearLayout>
+
 
             <!-- Блок добавления нового продукта -->
             <LinearLayout
